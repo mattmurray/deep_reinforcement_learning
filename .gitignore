@@ -107,13 +107,4 @@ venv.bak/
 
 .gitignore
 .idea/
-Banana_Windows_x86_64/Banana_Data/GI/
-Banana_Windows_x86_64/Banana_Data/MonoBleedingEdge/etc/
-Banana_Windows_x86_64/Banana_Data/Resources/
-Banana_Windows_x86_64/Banana_Data/app.info
-Banana_Windows_x86_64/Banana_Data/boot.config
-Banana_Windows_x86_64/Banana_Data/globalgamemanagers
-Banana_Windows_x86_64/Banana_Data/globalgamemanagers.assets
-Banana_Windows_x86_64/Banana_Data/level0
-Banana_Windows_x86_64/Banana_Data/sharedassets0.assets
-Banana_Windows_x86_64/Banana_Data/sharedassets0.assets.resS
+navigation/Banana_Windows_x86_64/*/*
