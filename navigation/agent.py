@@ -14,7 +14,7 @@ import torch.optim as optim
 from model import QNetwork
 
 # hyperparams
-from hyperparams import BUFFER_SIZE, BATCH_SIZE, GAMMA, TAU, LR, UPDATE_EVERY
+from settings import BUFFER_SIZE, BATCH_SIZE, GAMMA, TAU, LR, UPDATE_EVERY
 
 
 # train on GPU when available
