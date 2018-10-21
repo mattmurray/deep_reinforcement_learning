@@ -14,6 +14,7 @@ from datetime import datetime
 from agent import *
 from model import *
 from settings import N_EPISODES, MAX_T, EPS_START, EPS_END, EPS_DECAY
+from settings import BUFFER_SIZE, BATCH_SIZE, GAMMA, TAU, LR, UPDATE_EVERY
 
 def arg_parser(args):
 
@@ -44,7 +45,7 @@ def arg_parser(args):
     return n_episodes, max_t, eps_start, eps_end, eps_decay
 
 
-def dqn(env, n_episodes, max_t, eps_start, eps_end, eps_decay):
+def dqn(env, n_episodes, max_t, eps_start, eps_end, eps_decay, save_path=None):
     """Deep Q-Learning.
 
     Params
@@ -103,7 +104,13 @@ def dqn(env, n_episodes, max_t, eps_start, eps_end, eps_decay):
 
             print('\nEnvironment solved in {:d} episodes!\tAverage Score: {:.2f}'.format(i_episode - 100,
                                                                                          np.mean(scores_window)))
-            torch.save(agent.qnetwork_local.state_dict(), 'checkpoint.pth')
+
+            if save_path == None:
+                # save to current directory
+                torch.save(agent.qnetwork_local.state_dict(), 'checkpoint.pth')
+            else:
+                # save to specified directory
+                torch.save(agent.qnetwork_local.state_dict(), os.path.join(save_path, 'checkpoint.pth'))
 
     return scores, solved_in
 
@@ -141,23 +148,28 @@ state_size = len(state)
 # Initialize the agent
 agent = Agent(state_size=state_size, action_size=action_size, seed=0)
 
+# create directory for the run
+runs_path = "runs"
+timestamp = datetime.strftime(datetime.now(), "%Y%M%d%H%M")
+run_path = os.path.join(runs_path, timestamp)
+os.mkdir(run_path)
+
 # train agent
-scores, solved_in = dqn(env, n_episodes=n_episodes, max_t=max_t, eps_start=eps_start, eps_end=eps_end, eps_decay=eps_decay)
+scores, solved_in = dqn(env,
+                        n_episodes=n_episodes,
+                        max_t=max_t,
+                        eps_start=eps_start,
+                        eps_end=eps_end,
+                        eps_decay=eps_decay,
+                        save_path=run_path)
 
 # close environment
 env.close()
 
 # save scores to CSV
-runs_path = "runs"
-timestamp = datetime.strftime(datetime.now(), "%Y%M%d%H%M")
-
-# create directory for this run
-run_path = os.path.join(runs_path, timestamp)
-os.mkdir(run_path)
-
 score_data = pd.DataFrame(scores, columns=['episode_score'])
 score_data['episode_number'] = score_data.index + 1
 
-file_name = "{},solved_in__{},n_episodes__{},max_t__{},eps_start__{},eps_end__{},eps_decay__{}.csv".format(timestamp, solved_in, n_episodes, max_t, eps_start, eps_end, eps_decay)
+file_name = "{},solved_in__{},n_episodes__{},max_t__{},eps_start__{},eps_end__{},eps_decay__{},batch_size__{},buffer_size__{},gamma__{},tau__{},lr__{},update_every__{}.csv".format(timestamp, solved_in, n_episodes, max_t, eps_start, eps_end, eps_decay, BATCH_SIZE, BUFFER_SIZE, GAMMA, TAU, LR, UPDATE_EVERY)
 print("Saving scores data to:\n{}".format(file_name))
 score_data.to_csv(os.path.join(run_path, file_name), index=None)
