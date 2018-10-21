@@ -13,7 +13,7 @@ import torch.optim as optim
 # model architecture
 from model import QNetwork
 
-# hyperparams
+# settings & hyperparameters
 from settings import BUFFER_SIZE, BATCH_SIZE, GAMMA, TAU, LR, UPDATE_EVERY
 
 
@@ -24,10 +24,6 @@ if torch.cuda.is_available():
 else:
     print("No GPU available")
     device = torch.device("cpu")
-
-
-# device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-
 
 # the agent
 class Agent():

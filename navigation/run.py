@@ -13,13 +13,34 @@ from datetime import datetime
 # app imports
 from agent import *
 from model import *
+from settings import N_EPISODES, MAX_T, EPS_START, EPS_END, EPS_DECAY
 
 def arg_parser(args):
-    n_episodes = int(args.n_episodes[0])
-    max_t = int(args.max_t[0])
-    eps_start = float(args.eps_start[0])
-    eps_end = float(args.eps_end[0])
-    eps_decay = float(args.eps_decay[0])
+
+    try:
+        n_episodes = int(args.n_episodes[0])
+    except:
+        n_episodes = N_EPISODES
+    try:
+        max_t = int(args.max_t[0])
+    except:
+        max_t = MAX_T
+    try:
+        eps_start = float(args.eps_start[0])
+    except:
+        eps_start = EPS_START
+    try:
+        eps_end = float(args.eps_end[0])
+    except:
+        eps_end = EPS_END
+    try:
+        eps_decay = float(args.eps_decay[0])
+    except:
+        eps_decay = EPS_DECAY
+
+    print('\nPARAMS:\nn_episodes: {}\nmax_t: {}\neps_start: {}\neps_end: {}\neps_decay: {}\n'.format(
+        n_episodes, max_t, eps_start, eps_end, eps_decay))
+
     return n_episodes, max_t, eps_start, eps_end, eps_decay
 
 
@@ -37,7 +58,7 @@ def dqn(env, n_episodes, max_t, eps_start, eps_end, eps_decay):
     """
 
     scores = []  # list containing scores from each episode
-    scores_window = deque(maxlen=50)  # last 100 scores
+    scores_window = deque(maxlen=100)  # last 100 scores
     eps = eps_start  # initialize epsilon
     solved = False
     solved_in = 0
@@ -72,8 +93,10 @@ def dqn(env, n_episodes, max_t, eps_start, eps_end, eps_decay):
 
         # Log progress
         print('\rEpisode {}\tAverage Score: {:.2f}'.format(i_episode, np.mean(scores_window)), end="")
+
         if i_episode % 50 == 0:
             print('\rEpisode {}\tAverage Score: {:.2f}'.format(i_episode, np.mean(scores_window)))
+
         if np.mean(scores_window) >= 13.0 and not solved:
             solved = True
             solved_in = i_episode - 100
@@ -85,36 +108,16 @@ def dqn(env, n_episodes, max_t, eps_start, eps_end, eps_decay):
     return scores, solved_in
 
 
-try:
-    parse = argparse.ArgumentParser()
-    parse.add_argument('-n', '--n_episodes', help='number of episodes in training', nargs=1)
-    parse.add_argument('-m', '--max_t', help='max number of timesteps per episode', nargs=1)
-    parse.add_argument('-s', '--eps_start', help='starting value of epsilon', nargs=1)
-    parse.add_argument('-e', '--eps_end', help='minimum value of epsilon', nargs=1)
-    parse.add_argument('-d', '--eps_decay', help='multiplicative factor (per episode) for decreasing epsilon', nargs=1)
+# parse parameters from command line
+parse = argparse.ArgumentParser()
+parse.add_argument('-n', '--n_episodes', help='number of episodes in training', nargs=1)
+parse.add_argument('-m', '--max_t', help='max number of timesteps per episode', nargs=1)
+parse.add_argument('-s', '--eps_start', help='starting value of epsilon', nargs=1)
+parse.add_argument('-e', '--eps_end', help='minimum value of epsilon', nargs=1)
+parse.add_argument('-d', '--eps_decay', help='multiplicative factor (per episode) for decreasing epsilon', nargs=1)
 
-    # args = parse.parse_args()
-    # n_episodes = int(args.n_episodes[0])
-    # max_t = int(args.max_t[0])
-    # eps_start = float(args.eps_start[0])
-    # eps_end = float(args.eps_end[0])
-    # eps_decay = float(args.eps_decay[0])
-
-    n_episodes, max_t, eps_start, eps_end, eps_decay = arg_parser(parse.parse_args())
-    print('Using custom parameters...')
-
-except:
-    print('Using default parameters...')
-    from settings import N_EPISODES, MAX_T, EPS_START, EPS_END, EPS_DECAY
-    n_episodes = N_EPISODES
-    max_t = MAX_T
-    eps_start = EPS_START
-    eps_end = EPS_END
-    eps_decay = EPS_DECAY
-
-print('PARAMS:\n\n\nn_episodes: {}\nmax_t: {}\neps_start: {}\neps_end: {}\neps_decay: {}'.format(
-    n_episodes, max_t, eps_start, eps_end, eps_decay))
-
+# set parameters for agent training
+n_episodes, max_t, eps_start, eps_end, eps_decay = arg_parser(parse.parse_args())
 
 # start environment
 env = UnityEnvironment(file_name="Banana_Windows_x86_64/Banana.exe")
@@ -141,9 +144,20 @@ agent = Agent(state_size=state_size, action_size=action_size, seed=0)
 # train agent
 scores, solved_in = dqn(env, n_episodes=n_episodes, max_t=max_t, eps_start=eps_start, eps_end=eps_end, eps_decay=eps_decay)
 
+# close environment
+env.close()
+
 # save scores to CSV
 runs_path = "runs"
 timestamp = datetime.strftime(datetime.now(), "%Y%M%d%H%M")
-score_data = pd.DataFrame(scores, columns=['avg_score'])
+
+# create directory for this run
+run_path = os.path.join(runs_path, timestamp)
+os.mkdir(run_path)
+
+score_data = pd.DataFrame(scores, columns=['episode_score'])
+score_data['episode_number'] = score_data.index + 1
+
 file_name = "{},solved_in__{},n_episodes__{},max_t__{},eps_start__{},eps_end__{},eps_decay__{}.csv".format(timestamp, solved_in, n_episodes, max_t, eps_start, eps_end, eps_decay)
-score_data.to_csv(os.path.join(runs_path, file_name), index=None)
+print("Saving scores data to:\n{}".format(file_name))
+score_data.to_csv(os.path.join(run_path, file_name), index=None)
