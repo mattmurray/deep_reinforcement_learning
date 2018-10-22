@@ -151,7 +151,7 @@ agent = Agent(state_size=state_size, action_size=action_size, seed=0)
 
 # create directory for the run
 runs_path = "runs"
-timestamp = datetime.strftime(datetime.now(), "%Y%M%d%H%M")
+timestamp = datetime.strftime(datetime.now(), "%Y%m%d%H%M")
 run_path = os.path.join(runs_path, timestamp)
 os.mkdir(run_path)
 
