@@ -4,7 +4,7 @@
 
 This will be updated over time as I add to the repo with new projects.
 
-#### [1. Navigation](navigation/README.md)
+#### [1. Navigation](navigation/)
 
 
 ## Dependencies
