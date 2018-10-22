@@ -15,6 +15,7 @@ from agent import *
 from model import *
 from settings import N_EPISODES, MAX_T, EPS_START, EPS_END, EPS_DECAY
 from settings import BUFFER_SIZE, BATCH_SIZE, GAMMA, TAU, LR, UPDATE_EVERY
+from settings import ENVIRONMENT_PATH
 
 def arg_parser(args):
 
@@ -127,7 +128,7 @@ parse.add_argument('-d', '--eps_decay', help='multiplicative factor (per episode
 n_episodes, max_t, eps_start, eps_end, eps_decay = arg_parser(parse.parse_args())
 
 # start environment
-env = UnityEnvironment(file_name="Banana_Windows_x86_64/Banana.exe")
+env = UnityEnvironment(file_name=ENVIRONMENT_PATH)
 
 # get the default brain
 brain_name = env.brain_names[0]

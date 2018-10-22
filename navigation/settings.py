@@ -12,3 +12,5 @@ MAX_T = 1000                    # maximum number of timesteps per episode
 EPS_START = 1.0                 # starting value of epsilon
 EPS_END = 0.01                  # ending value of epsilon
 EPS_DECAY = 0.995               # epsilon decay factor
+
+ENVIRONMENT_PATH = 'Banana_Windows_x86_64/Banana.exe' # reference to the environment
