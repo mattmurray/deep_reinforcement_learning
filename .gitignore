@@ -109,3 +109,9 @@ venv.bak/
 .idea/
 navigation/Banana_Windows_x86_64/*/*
 /navigation/Banana_Windows_x86_64/
+
+/navigation/Banana_Windows_x86_64/Banana_Data/
+
+runs/*
+/navigation/review.py
+/navigation/peel.py
