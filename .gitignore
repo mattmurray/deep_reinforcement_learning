@@ -105,6 +105,11 @@ venv.bak/
 # mypy
 .mypy_cache/
 
+
+
+
+runs/
+
 .gitignore
 .idea/
 navigation/Banana_Windows_x86_64/*/*
@@ -112,6 +117,9 @@ navigation/Banana_Windows_x86_64/*/*
 
 /navigation/Banana_Windows_x86_64/Banana_Data/
 
-runs/*
+
 /navigation/review.py
 /navigation/peel.py
+
+
+/continuous_control/Reacher_Windows_x86_64/*
