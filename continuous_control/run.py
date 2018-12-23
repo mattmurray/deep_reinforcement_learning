@@ -120,7 +120,7 @@ def ddpg(n_episodes, max_t, print_every, agents, save_path=None):
 parse = argparse.ArgumentParser()
 parse.add_argument('-n', '--n_episodes', help='number of episodes in training', nargs=1)
 parse.add_argument('-m', '--max_t', help='max number of timesteps per episode', nargs=1)
-parse.add_argument('-p', '--buffer_size', help='frequency of print statements of scores', nargs=1)
+parse.add_argument('-b', '--buffer_size', help='change the buffer size', nargs=1)
 parse.add_argument('-g', '--gamma', help='gamma number', nargs=1)
 parse.add_argument('-t', '--tau', help='tau number', nargs=1)
 parse.add_argument('-a', '--lr_actor', help='actor learning rate', nargs=1)
