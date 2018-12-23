@@ -3,7 +3,7 @@
 ### The environment
 ---
 
-This environment in this project is Unity's Reacher environment [(see here)](https://github.com/Unity-Technologies/ml-agents/blob/master/docs/Learning-Environment-Examples.md#reacher) where double-joined arms move to reach moving balloons.
+The environment is Unity's Reacher environment [(see here)](https://github.com/Unity-Technologies/ml-agents/blob/master/docs/Learning-Environment-Examples.md#reacher) where double-joined arms move to reach moving balloons.
 
 - **Number of agents:** 20
 - **State size:** 33
@@ -23,7 +23,7 @@ The environment can be downloaded from one of the following links:
 - Windows (32-bit): [click here](https://s3-us-west-1.amazonaws.com/udacity-drlnd/P2/Reacher/Reacher_Windows_x86.zip)
 - Windows (64-bit): [click here](https://s3-us-west-1.amazonaws.com/udacity-drlnd/P2/Reacher/Reacher_Windows_x86_64.zip)
 
-Once downloaded, unzip the contents to this directory and update *ENVIRONMENT_PATH* inside *settings.py* with the path to your environment.
+Once downloaded, unzip the contents to this directory and update the **ENVIRONMENT_PATH** inside [settings.py](settings.py) with the path to your environment.
 
 ---
 
