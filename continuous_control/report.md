@@ -30,6 +30,21 @@ In DDPG, there are two copies of the network weights; 2x copies of the regular n
 
 In practice, soft updates produce convergence at a faster rate than only updating after a large number of time steps. It is worth noting that the soft update strategy can be used on all algorithms where there are regular and target networks, meaning that it is possible to also use this strategy on DQN.
 
+### The hyperparameters used
+
+The following hyperparameters were used to solve the environment in 59 episodes:
+
+- BUFFER_SIZE = 100000
+- BATCH_SIZE = 128
+- GAMMA = 0.99
+- TAU = 0.001
+- LR_ACTOR = 0.0002
+- LR_CRITIC = 0.001
+- WEIGHT_DECAY = 0
+- MAX_T = 1000
+
+In addition, the neural networks contained two fully connected hidden layers with 400 and 300 neurons respectively.
+
 ### Imports
 
 
@@ -336,7 +351,7 @@ plt.legend()
 
 
 
-![png](output_18_1.png)
+![png](output_20_1.png)
 
 
 ### Summary and future improvements
