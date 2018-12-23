@@ -1,7 +1,6 @@
 import numpy as np
 import torch
 import torch.nn.functional as F
-# import torch.optim as optim
 import torch.nn as nn
 
 def hidden_init(layer):

@@ -16,8 +16,6 @@ else:
     device = torch.device("cpu")
 
 
-# from settings import BUFFER_SIZE, BATCH_SIZE, GAMMA, TAU, LR_ACTOR, LR_CRITIC, WEIGHT_DECAY
-
 class Agents():
     """Interacts with and learns from the environment."""
 
