@@ -22,7 +22,7 @@ This task is a multi agent problem because there are two agents interacting with
 
 As each agent is an opponent learning to play the tennis game, and receives a reward each time it hits the ball over the net, both agents need to collaborate as well as compete to maximise the available score at the end of each episode.
 
-For this reason, and that both agents are interacting with the same environment, there is a benefit to setting up the algorithm so that both agents share experiences as well as have the same hyperparameters. This allows them to both learn at similar rates, and by pooling experiences, both should in theory learn at a faster rate.
+For this reason there is a benefit to setting up the algorithm so that both agents share experiences as well as have the same hyperparameters. This allows them to both learn at similar rates, and by pooling experiences, both should in theory learn at a faster rate.
 
 The algorithm used was DDPG with two agents, with separate actor/critics but a pooled replay buffer.  
 
@@ -44,7 +44,7 @@ I found that the following settings were able to solve the environment in **1,07
 - Epsilon end: 0
 - Epsilon decay: 0.9999
 
-The neural networks each had two hidden layers with 256 and 128 neurons.
+The neural networks had two hidden layers with 256 and 128 neurons.
 
 ### Summary and future improvements
 
@@ -56,7 +56,7 @@ The weights were updated after each episode as I found that waiting took the age
 
 Increasing the buffer size from 100,000 to 300,000 seemed to help slightly. 
 
-To further improve on the performance achieved so far, I would like to explore altering the sizes of the hidden layers in the neural networks to see if that improves the speed at which the agents are able to solve the environment.
+To further improve on the performance achieved so far, I would like to explore altering the sizes of the hidden layers in the neural networks to see if that has any effect.
 
 Also, as I only used a simple experienced replay I would like to see if changing this to prioritized experience replay would speed up training.
 
